@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import serviceEyebrow from '@/assets/service-eyebrow.jpg';
 import serviceFacial from '@/assets/service-facial.jpg';
 import serviceMicropigmentation from '@/assets/service-micropigmentation.jpg';
@@ -17,6 +17,16 @@ const ServicesSection = () => {
   const lastTimeRef = useRef<number>(0);
   const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  // Drag state
+  const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartPositionRef = useRef(0);
+  const velocityRef = useRef(0);
+  const lastDragXRef = useRef(0);
+  const lastDragTimeRef = useRef(0);
+  const inertiaAnimationRef = useRef<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const services = [
     {
@@ -63,6 +73,58 @@ const ServicesSection = () => {
   // Speed in pixels per second
   const speed = 50;
 
+  // Get half width for seamless loop
+  const getHalfWidth = useCallback(() => {
+    if (!carouselRef.current) return 0;
+    return carouselRef.current.scrollWidth / 2;
+  }, []);
+
+  // Normalize position for infinite loop
+  const normalizePosition = useCallback((pos: number) => {
+    const halfWidth = getHalfWidth();
+    if (halfWidth === 0) return pos;
+    
+    while (pos < 0) pos += halfWidth;
+    while (pos >= halfWidth) pos -= halfWidth;
+    
+    return pos;
+  }, [getHalfWidth]);
+
+  // Apply transform
+  const applyTransform = useCallback((pos: number) => {
+    if (!carouselRef.current) return;
+    carouselRef.current.style.transform = `translateX(-${pos}px)`;
+  }, []);
+
+  // Inertia animation for smooth deceleration after drag
+  const animateInertia = useCallback(() => {
+    if (!carouselRef.current) return;
+
+    const friction = 0.95;
+    const minVelocity = 0.5;
+
+    velocityRef.current *= friction;
+
+    if (Math.abs(velocityRef.current) < minVelocity) {
+      velocityRef.current = 0;
+      if (inertiaAnimationRef.current) {
+        cancelAnimationFrame(inertiaAnimationRef.current);
+        inertiaAnimationRef.current = null;
+      }
+      // Resume auto animation after inertia ends
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+      pauseTimeoutRef.current = setTimeout(() => {
+        isPausedRef.current = false;
+      }, 2000);
+      return;
+    }
+
+    positionRef.current = normalizePosition(positionRef.current - velocityRef.current);
+    applyTransform(positionRef.current);
+
+    inertiaAnimationRef.current = requestAnimationFrame(animateInertia);
+  }, [normalizePosition, applyTransform]);
+
   const animate = useCallback((timestamp: number) => {
     if (!carouselRef.current) return;
 
@@ -73,22 +135,14 @@ const ServicesSection = () => {
     const deltaTime = timestamp - lastTimeRef.current;
     lastTimeRef.current = timestamp;
 
-    if (!isPausedRef.current) {
+    if (!isPausedRef.current && !isDraggingRef.current) {
       positionRef.current += (speed * deltaTime) / 1000;
-
-      // Get half width for seamless loop
-      const halfWidth = carouselRef.current.scrollWidth / 2;
-
-      // Reset position seamlessly when reaching halfway
-      if (positionRef.current >= halfWidth) {
-        positionRef.current = positionRef.current - halfWidth;
-      }
-
-      carouselRef.current.style.transform = `translateX(-${positionRef.current}px)`;
+      positionRef.current = normalizePosition(positionRef.current);
+      applyTransform(positionRef.current);
     }
 
     animationRef.current = requestAnimationFrame(animate);
-  }, []);
+  }, [normalizePosition, applyTransform]);
 
   useEffect(() => {
     animationRef.current = requestAnimationFrame(animate);
@@ -100,31 +154,113 @@ const ServicesSection = () => {
       if (pauseTimeoutRef.current) {
         clearTimeout(pauseTimeoutRef.current);
       }
+      if (inertiaAnimationRef.current) {
+        cancelAnimationFrame(inertiaAnimationRef.current);
+      }
     };
   }, [animate]);
 
-  const handleInteractionStart = useCallback(() => {
+  // Drag handlers
+  const handleDragStart = useCallback((clientX: number) => {
+    isDraggingRef.current = true;
+    setIsDragging(true);
     isPausedRef.current = true;
+    dragStartXRef.current = clientX;
+    dragStartPositionRef.current = positionRef.current;
+    lastDragXRef.current = clientX;
+    lastDragTimeRef.current = performance.now();
+    velocityRef.current = 0;
+
+    if (inertiaAnimationRef.current) {
+      cancelAnimationFrame(inertiaAnimationRef.current);
+      inertiaAnimationRef.current = null;
+    }
     if (pauseTimeoutRef.current) {
       clearTimeout(pauseTimeoutRef.current);
     }
   }, []);
 
-  const handleInteractionEnd = useCallback(() => {
-    if (pauseTimeoutRef.current) {
-      clearTimeout(pauseTimeoutRef.current);
-    }
-    pauseTimeoutRef.current = setTimeout(() => {
-      isPausedRef.current = false;
-    }, 3000);
-  }, []);
+  const handleDragMove = useCallback((clientX: number) => {
+    if (!isDraggingRef.current || !carouselRef.current) return;
 
-  const handleMouseEnter = useCallback(() => {
-    isPausedRef.current = true;
-  }, []);
+    const deltaX = dragStartXRef.current - clientX;
+    const now = performance.now();
+    const timeDelta = now - lastDragTimeRef.current;
+
+    if (timeDelta > 0) {
+      const instantVelocity = (lastDragXRef.current - clientX) / timeDelta * 16;
+      velocityRef.current = velocityRef.current * 0.7 + instantVelocity * 0.3;
+    }
+
+    lastDragXRef.current = clientX;
+    lastDragTimeRef.current = now;
+
+    let newPosition = dragStartPositionRef.current + deltaX;
+    newPosition = normalizePosition(newPosition);
+    positionRef.current = newPosition;
+    applyTransform(newPosition);
+  }, [normalizePosition, applyTransform]);
+
+  const handleDragEnd = useCallback(() => {
+    if (!isDraggingRef.current) return;
+
+    isDraggingRef.current = false;
+    setIsDragging(false);
+
+    // Start inertia animation if there's velocity
+    if (Math.abs(velocityRef.current) > 1) {
+      inertiaAnimationRef.current = requestAnimationFrame(animateInertia);
+    } else {
+      // Resume auto animation after pause
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+      pauseTimeoutRef.current = setTimeout(() => {
+        isPausedRef.current = false;
+      }, 2000);
+    }
+  }, [animateInertia]);
+
+  // Touch event handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    handleDragStart(e.touches[0].clientX);
+  }, [handleDragStart]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (isDraggingRef.current) {
+      e.preventDefault();
+    }
+    handleDragMove(e.touches[0].clientX);
+  }, [handleDragMove]);
+
+  const handleTouchEnd = useCallback(() => {
+    handleDragEnd();
+  }, [handleDragEnd]);
+
+  // Mouse event handlers
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    handleDragStart(e.clientX);
+  }, [handleDragStart]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    handleDragMove(e.clientX);
+  }, [handleDragMove]);
+
+  const handleMouseUp = useCallback(() => {
+    handleDragEnd();
+  }, [handleDragEnd]);
 
   const handleMouseLeave = useCallback(() => {
-    isPausedRef.current = false;
+    if (isDraggingRef.current) {
+      handleDragEnd();
+    } else {
+      isPausedRef.current = false;
+    }
+  }, [handleDragEnd]);
+
+  const handleMouseEnter = useCallback(() => {
+    if (!isDraggingRef.current) {
+      isPausedRef.current = true;
+    }
   }, []);
 
   const ServiceCard = ({ service }: { service: typeof services[0] }) => (
@@ -189,12 +325,19 @@ const ServicesSection = () => {
         animate={isInView ? { opacity: 1 } : {}}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="relative"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleInteractionStart}
-        onTouchEnd={handleInteractionEnd}
       >
-        <div className="overflow-hidden">
+        <div 
+          className={`overflow-hidden ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          style={{ touchAction: 'pan-y' }}
+        >
           <div 
             ref={carouselRef}
             className="flex gap-4 md:gap-6 will-change-transform"
