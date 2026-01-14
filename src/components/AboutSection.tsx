@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Award, Heart, Users, Sparkles, GraduationCap, BadgeCheck, BookOpen } from 'lucide-react';
+import stellaProfessional from '@/assets/stella-professional.jpg';
 
 const AboutSection = () => {
   const ref = useRef(null);
@@ -33,13 +34,39 @@ const AboutSection = () => {
   return (
     <section id="sobre" className="section-padding bg-muted" ref={ref}>
       <div className="container-custom">
-        <div className="max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          {/* Professional Photo */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div className="relative overflow-hidden rounded-2xl shadow-xl">
+              <img
+                src={stellaProfessional}
+                alt="Stella Sousa - Especialista em Design de Sobrancelhas"
+                className="w-full h-auto object-cover aspect-[4/5]"
+              />
+              <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl" />
+            </div>
+            <div className="mt-4 text-center">
+              <p className="text-primary font-semibold text-sm tracking-wide uppercase">
+                Stella Sousa
+              </p>
+              <p className="text-muted-foreground text-xs mt-1">
+                Especialista em Design de Sobrancelhas
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-          <span className="text-primary font-medium tracking-widest uppercase text-sm">
+            <span className="text-primary font-medium tracking-widest uppercase text-sm">
               Sobre a Profissional
             </span>
             <h2 className="heading-section text-foreground mt-3 mb-6">
