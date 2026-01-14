@@ -56,7 +56,8 @@ const ServicesSection = () => {
     {
       image: serviceWaxing,
       title: 'Depilação Egípcia',
-      description: 'Técnica milenar com linha que remove os pelos pela raiz, proporcionando pele lisinha por mais tempo.',
+      subtitle: 'Com linha 100% algodão',
+      description: 'A depilação egípcia é uma técnica precisa e delicada, ideal para quem busca um design mais definido e duradouro. Por remover os pelos desde a raiz, o resultado tem maior durabilidade. Diferente de outros métodos, a técnica não mancha a pele, não utiliza produtos químicos e é indicada inclusive para peles sensíveis. Proporciona um acabamento mais limpo e natural, valorizando o formato do rosto com segurança e eficiência.',
       highlight: 'Técnica Artesanal',
     },
     {
@@ -263,7 +264,7 @@ const ServicesSection = () => {
     }
   }, []);
 
-  const ServiceCard = ({ service }: { service: typeof services[0] }) => (
+  const ServiceCard = ({ service }: { service: { image: string; title: string; description: string; highlight: string | null; subtitle?: string } }) => (
     <div className="card-elegant group h-full select-none">
       <div className="relative overflow-hidden aspect-[4/3]">
         <img
@@ -285,10 +286,15 @@ const ServicesSection = () => {
       </div>
       
       <div className="p-4 md:p-6 pointer-events-none">
-        <h3 className="font-display text-lg md:text-xl font-semibold text-foreground mb-1.5 md:mb-2 
+        <h3 className="font-display text-lg md:text-xl font-semibold text-foreground mb-0.5 
                      group-hover:text-primary transition-colors">
           {service.title}
         </h3>
+        {service.subtitle && (
+          <p className="text-primary text-xs font-medium mb-1.5 md:mb-2">
+            {service.subtitle}
+          </p>
+        )}
         <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
           {service.description}
         </p>
