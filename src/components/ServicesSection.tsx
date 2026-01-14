@@ -6,7 +6,7 @@ import serviceFacial from '@/assets/service-facial.jpg';
 import serviceMicropigmentation from '@/assets/service-micropigmentacao-procedure.png';
 import serviceHenna from '@/assets/service-henna.jpg';
 import serviceDepilacaoEgipcia from '@/assets/service-depilacao-egipcia.png';
-import serviceSkinCleansing from '@/assets/service-skin-cleansing.jpg';
+import serviceSkinCleansing from '@/assets/service-limpeza-pele-procedure.png';
 
 const ServicesSection = () => {
   const ref = useRef(null);
