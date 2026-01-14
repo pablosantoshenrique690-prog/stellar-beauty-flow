@@ -196,7 +196,7 @@ const ContactSection = () => {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Localização Studio Stella Souza"
+                title="Localização Studio Stella Sousa"
                 className="grayscale hover:grayscale-0 transition-all duration-500"
               />
               <a

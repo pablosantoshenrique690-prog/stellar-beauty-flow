@@ -46,7 +46,7 @@ const TestimonialsSection = () => {
           </h2>
           <p className="text-body">
             A satisfação de nossas clientes é nossa maior recompensa. Veja o que 
-            elas têm a dizer sobre a experiência no Studio Stella Souza.
+            elas têm a dizer sobre a experiência no Studio Stella Sousa.
           </p>
         </motion.div>
 

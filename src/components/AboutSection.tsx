@@ -43,7 +43,7 @@ const AboutSection = () => {
               Sobre a Profissional
             </span>
             <h2 className="heading-section text-foreground mt-3 mb-6">
-              Conheça Stella Souza
+              Conheça Stella Sousa
             </h2>
             <p className="text-body mb-6">
               Apaixonada por realçar a expressão e a identidade de cada mulher, iniciei 
