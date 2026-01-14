@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useEffect, useCallback, useState } from 'react';
 import serviceEyebrow from '@/assets/service-eyebrow-procedure.png';
-import serviceFacial from '@/assets/service-facial.jpg';
 import serviceMicropigmentation from '@/assets/service-micropigmentacao-procedure.png';
 import serviceHenna from '@/assets/service-henna.jpg';
 import serviceDepilacaoEgipcia from '@/assets/service-depilacao-egipcia.png';
 import serviceSkinCleansing from '@/assets/service-limpeza-pele-procedure.png';
+import serviceBuco from '@/assets/service-buco-procedure.png';
 
 const ServicesSection = () => {
   const ref = useRef(null);
@@ -62,7 +62,7 @@ const ServicesSection = () => {
       highlight: 'Técnica Artesanal',
     },
     {
-      image: serviceFacial,
+      image: serviceBuco,
       title: 'Depilação de Buço',
       description: 'A depilação de buço é um procedimento delicado, realizado com técnica adequada para garantir remoção eficaz dos pelos e maior conforto. Proporciona um acabamento limpo e uniforme, valorizando a expressão facial e deixando a pele com aspecto mais suave. Com a remoção desde a raiz, o resultado apresenta maior durabilidade. O procedimento é realizado com atenção ao tipo de pele, evitando irritações e garantindo segurança.',
       highlight: 'Conforto e Precisão',
