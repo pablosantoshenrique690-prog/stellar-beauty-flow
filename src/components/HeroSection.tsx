@@ -27,7 +27,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         <img
           src={heroImage}
-          alt="Studio Stella Souza - Estética Facial e Corporal"
+          alt="Studio Stella Sousa - Estética Facial e Corporal"
           className="w-full h-full object-cover"
           loading="eager"
         />
