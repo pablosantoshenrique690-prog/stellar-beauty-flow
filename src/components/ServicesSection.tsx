@@ -3,7 +3,7 @@ import { useInView } from 'framer-motion';
 import { useRef, useEffect, useCallback, useState } from 'react';
 import serviceEyebrow from '@/assets/service-eyebrow-procedure.png';
 import serviceMicropigmentation from '@/assets/service-micropigmentacao-procedure.png';
-import serviceHenna from '@/assets/service-henna.jpg';
+import serviceHenna from '@/assets/service-henna-procedure.png';
 import serviceDepilacaoEgipcia from '@/assets/service-depilacao-egipcia.png';
 import serviceSkinCleansing from '@/assets/service-limpeza-pele-procedure.png';
 import serviceBuco from '@/assets/service-buco-procedure.png';
