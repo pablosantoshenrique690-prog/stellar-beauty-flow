@@ -5,7 +5,7 @@ import serviceEyebrow from '@/assets/service-eyebrow-procedure.png';
 import serviceFacial from '@/assets/service-facial.jpg';
 import serviceMicropigmentation from '@/assets/service-micropigmentation.jpg';
 import serviceHenna from '@/assets/service-henna.jpg';
-import serviceWaxing from '@/assets/service-waxing.jpg';
+import serviceDepilacaoEgipcia from '@/assets/service-depilacao-egipcia.png';
 import serviceSkinCleansing from '@/assets/service-skin-cleansing.jpg';
 
 const ServicesSection = () => {
@@ -55,7 +55,7 @@ const ServicesSection = () => {
       highlight: null,
     },
     {
-      image: serviceWaxing,
+      image: serviceDepilacaoEgipcia,
       title: 'Depilação Egípcia',
       subtitle: 'Com linha 100% algodão',
       description: 'A depilação egípcia é uma técnica precisa e delicada, ideal para quem busca um design mais definido e duradouro. Por remover os pelos desde a raiz, o resultado tem maior durabilidade. Diferente de outros métodos, a técnica não mancha a pele, não utiliza produtos químicos e é indicada inclusive para peles sensíveis. Proporciona um acabamento mais limpo e natural, valorizando o formato do rosto com segurança e eficiência.',
