@@ -44,8 +44,9 @@ const ServicesSection = () => {
     {
       image: serviceSkinCleansing,
       title: 'Limpeza de Pele',
-      description: 'Tratamento profundo que remove impurezas, renova a pele e proporciona viço e luminosidade.',
-      highlight: null,
+      subtitle: 'Profunda',
+      description: 'A limpeza de pele é um tratamento essencial para a saúde e o equilíbrio da pele, indicado para remover impurezas, células mortas e resíduos acumulados. Ajuda a desobstruir os poros, controlar a oleosidade e prevenir cravos e acne. Realizada com técnica adequada e produtos específicos, promove renovação celular, melhora a textura da pele e potencializa a absorção de ativos em tratamentos futuros.',
+      highlight: 'Cuidado Essencial',
     },
     {
       image: serviceHenna,
