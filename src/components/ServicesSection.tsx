@@ -63,9 +63,9 @@ const ServicesSection = () => {
     },
     {
       image: serviceFacial,
-      title: 'Buço',
-      description: 'Remoção delicada e precisa dos pelos faciais com técnicas que cuidam da sua pele sensível.',
-      highlight: null,
+      title: 'Depilação de Buço',
+      description: 'A depilação de buço é um procedimento delicado, realizado com técnica adequada para garantir remoção eficaz dos pelos e maior conforto. Proporciona um acabamento limpo e uniforme, valorizando a expressão facial e deixando a pele com aspecto mais suave. Com a remoção desde a raiz, o resultado apresenta maior durabilidade. O procedimento é realizado com atenção ao tipo de pele, evitando irritações e garantindo segurança.',
+      highlight: 'Conforto e Precisão',
     },
   ];
 
