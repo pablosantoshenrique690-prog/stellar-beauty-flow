@@ -32,7 +32,7 @@ const ServicesSection = () => {
     {
       image: serviceEyebrow,
       title: 'Design de Sobrancelhas',
-      description: 'Desenho personalizado que valoriza seus traços únicos, realçando a expressão do seu olhar.',
+      description: 'Realizado de forma personalizada, respeitando o formato do rosto, a simetria e as características naturais de cada cliente. A técnica busca valorizar a expressão facial, corrigindo assimetrias e proporcionando um resultado harmonioso e natural. Com prática e agilidade, o procedimento garante mais conforto, precisão no acabamento e um design com maior durabilidade. Cada atendimento é feito com atenção aos detalhes, assegurando um resultado que realça a beleza de forma equilibrada e profissional.',
       highlight: 'Mais Procurado',
     },
     {
