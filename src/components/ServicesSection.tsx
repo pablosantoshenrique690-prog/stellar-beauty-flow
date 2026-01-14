@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useEffect, useCallback, useState } from 'react';
-import serviceEyebrow from '@/assets/service-eyebrow.jpg';
+import serviceEyebrow from '@/assets/service-eyebrow-procedure.png';
 import serviceFacial from '@/assets/service-facial.jpg';
 import serviceMicropigmentation from '@/assets/service-micropigmentation.jpg';
 import serviceHenna from '@/assets/service-henna.jpg';
