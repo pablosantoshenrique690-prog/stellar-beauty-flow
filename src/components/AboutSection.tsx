@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Award, Heart, Users, Sparkles } from 'lucide-react';
+import { Award, Heart, Users, Sparkles, GraduationCap, BadgeCheck, BookOpen } from 'lucide-react';
 
 const AboutSection = () => {
   const ref = useRef(null);
@@ -70,6 +70,66 @@ const AboutSection = () => {
                 mais rápido, com menos desconforto e resultados consistentes.
               </p>
             </div>
+
+            {/* Credentials Block */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-background rounded-2xl p-5 sm:p-6 mb-8 border border-border/50 shadow-sm"
+            >
+              <h3 className="text-foreground font-semibold text-base sm:text-lg mb-4 flex items-center gap-2">
+                <BadgeCheck className="text-primary" size={20} />
+                Formação e Credenciais
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <GraduationCap className="text-primary" size={20} />
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground text-sm sm:text-base">
+                      Formação em Estética
+                    </p>
+                    <p className="text-muted-foreground text-xs sm:text-sm">
+                      Escola Vellup – Rio de Janeiro (RJ)
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Award className="text-primary" size={20} />
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground text-sm sm:text-base">
+                      Especialização em Micropigmentação
+                    </p>
+                    <p className="text-muted-foreground text-xs sm:text-sm">
+                      Escola Alan Spadone – São Paulo (SP)
+                    </p>
+                    <span className="inline-flex items-center gap-1 mt-1 text-xs text-primary font-medium">
+                      <BadgeCheck size={14} />
+                      Certificação Internacional
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="text-primary" size={20} />
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground text-sm sm:text-base">
+                      Instrutora de Maquiagem
+                    </p>
+                    <p className="text-muted-foreground text-xs sm:text-sm">
+                      Instituto Embelleze – 4 anos de experiência docente
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
             {/* Features Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-8">
