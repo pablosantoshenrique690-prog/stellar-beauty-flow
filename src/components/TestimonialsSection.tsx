@@ -1,13 +1,62 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import { Star, Quote } from 'lucide-react';
 
-const TestimonialsSection = () => {
+interface Testimonial {
+  name: string;
+  service: string;
+  text: string;
+  rating: number;
+}
+
+const TestimonialCard = memo(({ testimonial, index, isInView }: { 
+  testimonial: Testimonial; 
+  index: number;
+  isInView: boolean;
+}) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    animate={isInView ? { opacity: 1, y: 0 } : {}}
+    transition={{ duration: 0.6, delay: index * 0.1 }}
+    className="bg-muted rounded-2xl p-6 md:p-8 relative"
+  >
+    <Quote className="absolute top-4 right-4 md:top-6 md:right-6 text-primary/20" size={40} />
+    
+    <div className="flex gap-1 mb-3 md:mb-4">
+      {[...Array(testimonial.rating)].map((_, i) => (
+        <Star
+          key={i}
+          className="text-primary fill-primary"
+          size={16}
+        />
+      ))}
+    </div>
+
+    <p className="text-foreground leading-relaxed mb-5 md:mb-6 relative z-10 text-sm md:text-base">
+      "{testimonial.text}"
+    </p>
+
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center 
+                    justify-center text-primary font-semibold text-sm md:text-base">
+        {testimonial.name.charAt(0)}
+      </div>
+      <div>
+        <p className="font-semibold text-foreground text-sm md:text-base">{testimonial.name}</p>
+        <p className="text-xs md:text-sm text-muted-foreground">{testimonial.service}</p>
+      </div>
+    </div>
+  </motion.div>
+));
+
+TestimonialCard.displayName = 'TestimonialCard';
+
+const TestimonialsSection = memo(() => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const testimonials = [
+  const testimonials: Testimonial[] = [
     {
       name: 'Raquel',
       service: 'Design de Sobrancelhas',
@@ -53,40 +102,12 @@ const TestimonialsSection = () => {
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.name}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-muted rounded-2xl p-6 md:p-8 relative"
-            >
-              <Quote className="absolute top-4 right-4 md:top-6 md:right-6 text-primary/20" size={40} />
-              
-              <div className="flex gap-1 mb-3 md:mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="text-primary fill-primary"
-                    size={16}
-                  />
-                ))}
-              </div>
-
-              <p className="text-foreground leading-relaxed mb-5 md:mb-6 relative z-10 text-sm md:text-base">
-                "{testimonial.text}"
-              </p>
-
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center 
-                              justify-center text-primary font-semibold text-sm md:text-base">
-                  {testimonial.name.charAt(0)}
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground text-sm md:text-base">{testimonial.name}</p>
-                  <p className="text-xs md:text-sm text-muted-foreground">{testimonial.service}</p>
-                </div>
-              </div>
-            </motion.div>
+            <TestimonialCard 
+              key={testimonial.name} 
+              testimonial={testimonial} 
+              index={index}
+              isInView={isInView}
+            />
           ))}
         </div>
 
@@ -120,6 +141,8 @@ const TestimonialsSection = () => {
       </div>
     </section>
   );
-};
+});
+
+TestimonialsSection.displayName = 'TestimonialsSection';
 
 export default TestimonialsSection;
