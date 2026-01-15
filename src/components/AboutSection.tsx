@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, memo, useState } from 'react';
+import { useRef } from 'react';
 import { Award, Heart, Users, Sparkles, GraduationCap, BadgeCheck, BookOpen } from 'lucide-react';
 import stellaProfessional from '@/assets/stella-professional.jpg';
 
-const AboutSection = memo(() => {
+const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   const features = [
     {
@@ -44,22 +43,10 @@ const AboutSection = memo(() => {
             className="relative"
           >
             <div className="relative overflow-hidden rounded-2xl shadow-xl">
-              {/* Skeleton placeholder */}
-              {!imageLoaded && (
-                <div className="absolute inset-0 bg-muted-foreground/10 animate-pulse aspect-[4/5]" />
-              )}
               <img
                 src={stellaProfessional}
                 alt="Stella Sousa - Especialista em Design de Sobrancelhas"
-                loading="lazy"
-                decoding="async"
-                width={600}
-                height={750}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                onLoad={() => setImageLoaded(true)}
-                className={`w-full h-auto object-cover aspect-[4/5] transition-opacity duration-300 ${
-                  imageLoaded ? 'opacity-100' : 'opacity-0'
-                }`}
+                className="w-full h-auto object-cover aspect-[4/5]"
               />
               <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl" />
             </div>
@@ -207,8 +194,6 @@ const AboutSection = memo(() => {
       </div>
     </section>
   );
-});
-
-AboutSection.displayName = 'AboutSection';
+};
 
 export default AboutSection;
