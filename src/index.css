@@ -166,4 +166,7 @@
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-hero);
   }
+
+#lovable-badge{
+display: nome !important;
 }
