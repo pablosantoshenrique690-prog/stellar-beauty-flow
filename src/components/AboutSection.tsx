@@ -34,7 +34,7 @@ const AboutSection = memo(() => {
 
   return (
     <section id="sobre" className="section-padding bg-muted" ref={ref}>
-      <div className="container-custom">
+      <div className="container-custom px-4 sm:px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Professional Photo */}
           <motion.div
@@ -43,7 +43,7 @@ const AboutSection = memo(() => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="relative overflow-hidden rounded-2xl shadow-xl">
+            <div className="relative overflow-hidden rounded-2xl shadow-xl max-w-sm mx-auto lg:max-w-none">
               {/* Skeleton placeholder */}
               {!imageLoaded && (
                 <div className="absolute inset-0 bg-muted-foreground/10 animate-pulse aspect-[4/5]" />
@@ -55,7 +55,7 @@ const AboutSection = memo(() => {
                 decoding="async"
                 width={600}
                 height={750}
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 100vw, 50vw"
                 onLoad={() => setImageLoaded(true)}
                 className={`w-full h-auto object-cover aspect-[4/5] transition-opacity duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'
@@ -63,11 +63,11 @@ const AboutSection = memo(() => {
               />
               <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl" />
             </div>
-            <div className="mt-4 text-center">
-              <p className="text-primary font-semibold text-sm tracking-wide uppercase">
+            <div className="mt-3 sm:mt-4 text-center">
+              <p className="text-primary font-semibold text-xs sm:text-sm tracking-wide uppercase">
                 Stella Sousa
               </p>
-              <p className="text-muted-foreground text-xs mt-1">
+              <p className="text-muted-foreground text-[10px] sm:text-xs mt-1">
                 Especialista em Design de Sobrancelhas
               </p>
             </div>
@@ -79,19 +79,19 @@ const AboutSection = memo(() => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-primary font-medium tracking-widest uppercase text-sm">
+            <span className="text-primary font-medium tracking-widest uppercase text-xs sm:text-sm">
               Sobre a Profissional
             </span>
-            <h2 className="heading-section text-foreground mt-3 mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold tracking-tight text-foreground mt-2 sm:mt-3 mb-4 sm:mb-6">
               Conheça Stella Sousa
             </h2>
-            <p className="text-body mb-6">
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mb-4 sm:mb-6">
               Apaixonada por realçar a expressão e a identidade de cada mulher, iniciei 
               minha trajetória profissional em 2008, com foco no cuidado e no embelezamento 
               das sobrancelhas. Ao longo de 17 anos de experiência, aperfeiçoei técnicas 
               que respeitam o formato do rosto e valorizam os traços naturais de cada cliente.
             </p>
-            <p className="text-body mb-6">
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground mb-4 sm:mb-6">
               No <strong className="text-foreground">Estúdio Sobrancelhas Perfeitas</strong>, 
               cada atendimento é pensado de forma personalizada, com atenção aos detalhes 
               e resultados naturais. Trabalhamos exclusivamente com procedimentos voltados 
