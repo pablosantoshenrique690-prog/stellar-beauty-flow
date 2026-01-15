@@ -79,21 +79,21 @@ const TestimonialsSection = memo(() => {
 
   return (
     <section className="section-padding" ref={ref}>
-      <div className="container-custom px-4 sm:px-6 md:px-8">
+      <div className="container-custom">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 md:mb-16"
+          className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-xs sm:text-sm">
+          <span className="text-primary font-medium tracking-widest uppercase text-sm">
             Depoimentos
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold tracking-tight text-foreground mt-2 sm:mt-3 mb-3 sm:mb-4">
+          <h2 className="heading-section text-foreground mt-3 mb-4">
             O Que Nossas Clientes Dizem
           </h2>
-          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground">
+          <p className="text-body">
             A satisfação de nossas clientes é nossa maior recompensa. Veja o que 
             elas têm a dizer sobre a experiência no Studio Stella Sousa.
           </p>
@@ -116,25 +116,25 @@ const TestimonialsSection = memo(() => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-10 sm:mt-12 md:mt-16 text-center"
+          className="mt-16 text-center"
         >
-          <p className="text-muted-foreground text-xs sm:text-sm mb-4 sm:mb-6">
+          <p className="text-muted-foreground text-sm mb-6">
             Avaliações verificadas • Clientes reais de Cabo Frio e região
           </p>
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 items-center opacity-60">
+          <div className="flex flex-wrap justify-center gap-8 items-center opacity-60">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <Star className="text-primary fill-primary" size={14} />
+              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                <Star className="text-primary fill-primary" size={16} />
               </div>
-              <span className="text-foreground font-medium text-sm sm:text-base">5.0</span>
-              <span className="text-muted-foreground text-xs sm:text-sm">no Google</span>
+              <span className="text-foreground font-medium">5.0</span>
+              <span className="text-muted-foreground text-sm">no Google</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <Star className="text-primary fill-primary" size={14} />
+              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                <Star className="text-primary fill-primary" size={16} />
               </div>
-              <span className="text-foreground font-medium text-sm sm:text-base">+500</span>
-              <span className="text-muted-foreground text-xs sm:text-sm">avaliações</span>
+              <span className="text-foreground font-medium">+500</span>
+              <span className="text-muted-foreground text-sm">avaliações</span>
             </div>
           </div>
         </motion.div>

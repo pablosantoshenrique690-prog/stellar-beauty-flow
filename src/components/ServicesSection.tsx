@@ -330,21 +330,21 @@ const ServicesSection = memo(() => {
 
   return (
     <section id="servicos" className="section-padding overflow-hidden" ref={ref}>
-      <div className="container-custom px-4 sm:px-6 md:px-8">
+      <div className="container-custom px-4 md:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-16"
+          className="text-center max-w-2xl mx-auto mb-10 md:mb-16"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-xs sm:text-sm">
+          <span className="text-primary font-medium tracking-widest uppercase text-xs md:text-sm">
             Nossos Serviços
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold tracking-tight text-foreground mt-2 sm:mt-3 mb-2 sm:mb-3 md:mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-semibold tracking-tight text-foreground mt-3 mb-3 md:mb-4">
             Tratamentos Especializados
           </h2>
-          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground">
+          <p className="text-sm md:text-base lg:text-lg leading-relaxed text-muted-foreground">
             Cada procedimento é realizado com técnicas exclusivas, produtos premium 
             e todo o cuidado que você merece. Confira nosso catálogo de serviços.
           </p>
@@ -372,7 +372,7 @@ const ServicesSection = memo(() => {
         >
           <div 
             ref={carouselRef}
-            className="flex gap-3 sm:gap-4 md:gap-6 will-change-transform pl-4 sm:pl-6 md:pl-8"
+            className="flex gap-4 md:gap-6 will-change-transform"
             style={{
               width: 'max-content',
             }}
@@ -380,7 +380,7 @@ const ServicesSection = memo(() => {
             {duplicatedServices.map((service, index) => (
               <div
                 key={`${service.title}-${index}`}
-                className="flex-shrink-0 w-[260px] sm:w-[300px] md:w-[340px] lg:w-[380px]"
+                className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[350px] lg:w-[380px]"
               >
                 <ServiceCard service={service} />
               </div>
@@ -394,18 +394,18 @@ const ServicesSection = memo(() => {
       </motion.div>
 
       {/* CTA */}
-      <div className="container-custom px-4 sm:px-6 md:px-8">
+      <div className="container-custom px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-center mt-8 sm:mt-10 md:mt-16"
+          className="text-center mt-10 md:mt-16"
         >
-          <div className="bg-muted rounded-2xl p-5 sm:p-6 md:p-8 lg:p-12 max-w-3xl mx-auto">
-            <h3 className="font-display text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-2 sm:mb-3 md:mb-4">
+          <div className="bg-muted rounded-2xl p-6 md:p-8 lg:p-12 max-w-3xl mx-auto">
+            <h3 className="font-display text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-3 md:mb-4">
               Quer saber os valores?
             </h3>
-            <p className="text-muted-foreground mb-4 sm:mb-5 md:mb-6 max-w-lg mx-auto text-xs sm:text-sm md:text-base">
+            <p className="text-muted-foreground mb-5 md:mb-6 max-w-lg mx-auto text-sm md:text-base">
               Entre em contato pelo WhatsApp e receba uma avaliação personalizada 
               com os melhores procedimentos para você.
             </p>
@@ -413,7 +413,7 @@ const ServicesSection = memo(() => {
               href="https://wa.me/5522992497973?text=Olá, Stella! Vim pelo site e gostaria de saber os valores dos serviços. Pode me ajudar?"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary inline-block w-full sm:w-auto text-center text-sm sm:text-base"
+              className="btn-primary inline-block w-full sm:w-auto text-center"
             >
               Consultar Valores no WhatsApp
             </a>

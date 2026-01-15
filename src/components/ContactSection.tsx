@@ -70,38 +70,38 @@ const ContactSection = memo(() => {
 
   return (
     <section id="contato" className="section-padding bg-muted" ref={ref}>
-      <div className="container-custom px-4 sm:px-6 md:px-8">
+      <div className="container-custom">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 md:mb-16"
+          className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-xs sm:text-sm">
+          <span className="text-primary font-medium tracking-widest uppercase text-sm">
             Contato
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold tracking-tight text-foreground mt-2 sm:mt-3 mb-3 sm:mb-4">
+          <h2 className="heading-section text-foreground mt-3 mb-4">
             Agende Seu Horário
           </h2>
-          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground">
+          <p className="text-body">
             Estou pronta para transformar sua beleza! Entre em contato e agende 
             sua avaliação personalizada.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground mb-6 sm:mb-8">
+            <h3 className="font-display text-2xl font-semibold text-foreground mb-8">
               Entre em Contato
             </h3>
 
-            <div className="space-y-4 sm:space-y-5 md:space-y-6 mb-6 sm:mb-8 md:mb-10">
+            <div className="space-y-5 md:space-y-6 mb-8 md:mb-10">
               {contactInfo.map((info) => {
                 const isHorario = info.title === 'Horário';
                 return (
