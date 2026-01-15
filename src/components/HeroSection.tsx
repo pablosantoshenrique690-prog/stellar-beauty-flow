@@ -1,35 +1,39 @@
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { memo, useCallback } from 'react';
 import heroImage from '@/assets/hero-beauty.jpg';
 import logoStella from '@/assets/logo-stella.png';
 
-const HeroSection = () => {
-  const scrollToServices = () => {
+const HeroSection = memo(() => {
+  const scrollToServices = useCallback(() => {
     const element = document.querySelector('#servicos');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  };
+  }, []);
 
-  const scrollToContact = () => {
+  const scrollToContact = useCallback(() => {
     const element = document.querySelector('#contato');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  };
+  }, []);
 
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16 md:pt-0 md:pb-0"
     >
-      {/* Background Image */}
+      {/* Background Image - Priority loading for LCP */}
       <div className="absolute inset-0 z-0">
         <img
           src={heroImage}
           alt="Studio Stella Sousa - Estética Facial e Corporal"
           className="w-full h-full object-cover"
           loading="eager"
+          decoding="async"
+          fetchPriority="high"
+          sizes="100vw"
         />
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
@@ -47,6 +51,11 @@ const HeroSection = () => {
           <img 
             src={logoStella} 
             alt="Logo Estúdio Sobrancelhas Perfeitas" 
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            width={160}
+            height={160}
             className="h-24 sm:h-28 md:h-32 lg:h-40 w-auto object-contain brightness-0 invert drop-shadow-[0_4px_25px_rgba(255,255,255,0.6)]"
           />
         </motion.div>
@@ -141,6 +150,8 @@ const HeroSection = () => {
       </motion.div>
     </section>
   );
-};
+});
+
+HeroSection.displayName = 'HeroSection';
 
 export default HeroSection;

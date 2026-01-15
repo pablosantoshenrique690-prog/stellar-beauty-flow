@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { MapPin, Phone, Clock, Instagram, Facebook, Send, CheckCircle, CalendarClock } from 'lucide-react';
+import { useRef, useState, useCallback, memo } from 'react';
+import { MapPin, Phone, Instagram, Facebook, Send, CheckCircle, CalendarClock } from 'lucide-react';
 
-const ContactSection = () => {
+const ContactSection = memo(() => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ const ContactSection = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     
     const whatsappMessage = `Olá, Stella! Vim pelo site e gostaria de agendar um horário.
@@ -32,7 +32,11 @@ const ContactSection = () => {
       setIsSubmitted(false);
       setFormData({ name: '', phone: '', service: '', message: '' });
     }, 3000);
-  };
+  }, [formData]);
+
+  const handleChange = useCallback((field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  }, []);
 
   const contactInfo = [
     {
@@ -171,6 +175,7 @@ const ContactSection = () => {
                   rel="noopener noreferrer"
                   className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center
                            hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
+                  aria-label="Siga no Instagram"
                 >
                   <Instagram className="text-primary group-hover:text-primary-foreground" size={22} />
                 </a>
@@ -180,13 +185,14 @@ const ContactSection = () => {
                   rel="noopener noreferrer"
                   className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center
                            hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
+                  aria-label="Siga no Facebook"
                 >
                   <Facebook className="text-primary group-hover:text-primary-foreground" size={22} />
                 </a>
               </div>
             </div>
 
-            {/* Google Maps */}
+            {/* Google Maps - Lazy loaded */}
             <div className="rounded-xl overflow-hidden h-48 md:h-64 relative">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3677.8!2d-42.0297!3d-22.8797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x97197e6e3bffffff%3A0x0!2sR.%20Primeiro%20de%20Mar%C3%A7o%2C%20129%20-%20Cai%C3%A7ara%2C%20Cabo%20Frio%20-%20RJ%2C%2028905-130!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
@@ -248,7 +254,7 @@ const ContactSection = () => {
                       type="text"
                       required
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) => handleChange('name', e.target.value)}
                       placeholder="Digite seu nome completo"
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background
                                text-foreground placeholder:text-muted-foreground
@@ -265,7 +271,7 @@ const ContactSection = () => {
                       type="tel"
                       required
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) => handleChange('phone', e.target.value)}
                       placeholder="(00) 00000-0000"
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background
                                text-foreground placeholder:text-muted-foreground
@@ -281,7 +287,7 @@ const ContactSection = () => {
                     <select
                       required
                       value={formData.service}
-                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      onChange={(e) => handleChange('service', e.target.value)}
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background
                                text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 
                                focus:border-primary transition-all duration-300"
@@ -301,7 +307,7 @@ const ContactSection = () => {
                     </label>
                     <textarea
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) => handleChange('message', e.target.value)}
                       placeholder="Conte um pouco sobre o que deseja..."
                       rows={4}
                       className="w-full px-4 py-3 rounded-xl border border-border bg-background
@@ -326,6 +332,8 @@ const ContactSection = () => {
       </div>
     </section>
   );
-};
+});
+
+ContactSection.displayName = 'ContactSection';
 
 export default ContactSection;

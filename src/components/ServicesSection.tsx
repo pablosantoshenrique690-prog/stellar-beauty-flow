@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback, useState, memo } from 'react';
 import serviceEyebrow from '@/assets/service-eyebrow-procedure.png';
 import serviceMicropigmentation from '@/assets/service-micropigmentacao-procedure.png';
 import serviceHenna from '@/assets/service-henna-procedure.png';
@@ -8,7 +8,70 @@ import serviceDepilacaoEgipcia from '@/assets/service-depilacao-egipcia.png';
 import serviceSkinCleansing from '@/assets/service-limpeza-pele-procedure.png';
 import serviceBuco from '@/assets/service-buco-procedure.png';
 
-const ServicesSection = () => {
+interface ServiceType {
+  image: string;
+  title: string;
+  description: string;
+  highlight: string | null;
+  subtitle?: string;
+}
+
+const ServiceCard = memo(({ service }: { service: ServiceType }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
+  return (
+    <div className="card-elegant group h-full select-none">
+      <div className="relative overflow-hidden aspect-[4/3]">
+        {/* Skeleton placeholder */}
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-muted animate-pulse" />
+        )}
+        <img
+          src={service.image}
+          alt={service.title}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+          width={380}
+          height={285}
+          sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 350px, 380px"
+          onLoad={() => setImageLoaded(true)}
+          className={`w-full h-full object-cover transition-all duration-700 
+                   group-hover:scale-110 pointer-events-none ${
+                     imageLoaded ? 'opacity-100' : 'opacity-0'
+                   }`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent pointer-events-none" />
+        
+        {service.highlight && (
+          <span className="absolute top-3 left-3 md:top-4 md:left-4 bg-primary text-primary-foreground 
+                         px-2.5 py-1 rounded-full text-xs font-medium pointer-events-none">
+            {service.highlight}
+          </span>
+        )}
+      </div>
+      
+      <div className="p-4 md:p-6 pointer-events-none">
+        <h3 className="font-display text-lg md:text-xl font-semibold text-foreground mb-0.5 
+                     group-hover:text-primary transition-colors">
+          {service.title}
+        </h3>
+        {service.subtitle && (
+          <p className="text-primary text-xs font-medium mb-1.5 md:mb-2">
+            {service.subtitle}
+          </p>
+        )}
+        <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
+          {service.description}
+        </p>
+      </div>
+    </div>
+  );
+});
+
+ServiceCard.displayName = 'ServiceCard';
+
+const ServicesSection = memo(() => {
   const ref = useRef(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
@@ -28,7 +91,7 @@ const ServicesSection = () => {
   const inertiaAnimationRef = useRef<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const services = [
+  const services: ServiceType[] = [
     {
       image: serviceEyebrow,
       title: 'Design de Sobrancelhas',
@@ -265,44 +328,6 @@ const ServicesSection = () => {
     }
   }, []);
 
-  const ServiceCard = ({ service }: { service: { image: string; title: string; description: string; highlight: string | null; subtitle?: string } }) => (
-    <div className="card-elegant group h-full select-none">
-      <div className="relative overflow-hidden aspect-[4/3]">
-        <img
-          src={service.image}
-          alt={service.title}
-          loading="lazy"
-          draggable={false}
-          className="w-full h-full object-cover transition-transform duration-700 
-                   group-hover:scale-110 pointer-events-none"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent pointer-events-none" />
-        
-        {service.highlight && (
-          <span className="absolute top-3 left-3 md:top-4 md:left-4 bg-primary text-primary-foreground 
-                         px-2.5 py-1 rounded-full text-xs font-medium pointer-events-none">
-            {service.highlight}
-          </span>
-        )}
-      </div>
-      
-      <div className="p-4 md:p-6 pointer-events-none">
-        <h3 className="font-display text-lg md:text-xl font-semibold text-foreground mb-0.5 
-                     group-hover:text-primary transition-colors">
-          {service.title}
-        </h3>
-        {service.subtitle && (
-          <p className="text-primary text-xs font-medium mb-1.5 md:mb-2">
-            {service.subtitle}
-          </p>
-        )}
-        <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
-          {service.description}
-        </p>
-      </div>
-    </div>
-  );
-
   return (
     <section id="servicos" className="section-padding overflow-hidden" ref={ref}>
       <div className="container-custom px-4 md:px-8">
@@ -397,6 +422,8 @@ const ServicesSection = () => {
       </div>
     </section>
   );
-};
+});
+
+ServicesSection.displayName = 'ServicesSection';
 
 export default ServicesSection;
